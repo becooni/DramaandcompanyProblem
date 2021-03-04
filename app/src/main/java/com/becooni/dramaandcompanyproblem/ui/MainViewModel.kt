@@ -22,7 +22,9 @@ class MainViewModel @Inject constructor(
     private val _users = MutableLiveData<List<User>>()
     val users: LiveData<List<User>> = _users
 
-    fun searchUsers(query: String) {
+    val inputText = MutableLiveData<String>()
+
+    private fun searchUsers(query: String) {
         githubRepository.getUsers(query)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -33,5 +35,9 @@ class MainViewModel @Inject constructor(
                 Throwable::printStackTrace
             )
             .addTo(disposable)
+    }
+
+    fun onSearchClick(query: String) {
+        searchUsers(query)
     }
 }

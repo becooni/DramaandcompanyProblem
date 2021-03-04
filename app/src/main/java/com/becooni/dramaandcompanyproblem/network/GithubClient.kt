@@ -1,6 +1,8 @@
 package com.becooni.dramaandcompanyproblem.network
 
-class GithubClient(
+import javax.inject.Inject
+
+class GithubClient @Inject constructor(
     private val githubService: GithubService
 ) {
 

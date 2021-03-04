@@ -21,7 +21,7 @@ object PersistenceModule {
             appContext,
             AppDatabase::class.java,
             "User.db"
-        )
+        ).build()
 
     @Provides
     @Singleton

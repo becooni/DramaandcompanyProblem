@@ -1,7 +1,8 @@
 package com.becooni.dramaandcompanyproblem.repository
 
+import javax.inject.Inject
 
-class ConsonantUtil {
+class ConsonantUtil @Inject constructor() {
 
     private val initialConsonants = arrayOf(
         "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ",
