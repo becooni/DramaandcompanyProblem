@@ -189,7 +189,6 @@ class MainViewModel @Inject constructor(
     private fun addBookmarkDb(item: User) {
         githubRepository.insertBookmarkUser(item.copy(bookmarked = true))
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({}, Throwable::printStackTrace)
             .addTo(disposables)
     }
@@ -197,7 +196,6 @@ class MainViewModel @Inject constructor(
     private fun removeBookmarkDb(item: User) {
         githubRepository.deleteBookmarkUser(item)
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({}, Throwable::printStackTrace)
             .addTo(disposables)
     }
