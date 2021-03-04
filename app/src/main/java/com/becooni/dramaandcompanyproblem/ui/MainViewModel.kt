@@ -96,7 +96,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun setUserBookmark(item: User) {
-        val list = _users.value?.toMutableList() ?: mutableListOf()
+        val list = _users.toMutableList()
         val position = list.indexOfFirst {
             when (it) {
                 is ItemType.Item -> it.item.id == item.id
@@ -110,7 +110,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun unsetUserBookmark(item: User) {
-        val list = _users.value?.toMutableList() ?: mutableListOf()
+        val list = _users.toMutableList()
         val position = list.indexOfFirst {
             when (it) {
                 is ItemType.Item -> it.item.id == item.id
@@ -124,7 +124,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun addBookmark(item: User) {
-        val list = _bookmarks.value?.toMutableList() ?: mutableListOf()
+        val list = _bookmarks.toMutableList()
 
         val initial = item.initial
 
@@ -163,8 +163,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun removeBookmark(item: User) {
-        val list = _bookmarks.value?.toMutableList() ?: mutableListOf()
-
+        val list = bookmarks.toMutableList()
         val position = list.indexOfFirst {
             when (it) {
                 is ItemType.Item -> it.item.id == item.id
