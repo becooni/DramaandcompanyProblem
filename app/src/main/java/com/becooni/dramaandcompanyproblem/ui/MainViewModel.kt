@@ -153,14 +153,23 @@ class MainViewModel @Inject constructor(
 
     private fun removeBookmark(item: User) {
         val list = _bookmarks.value?.toMutableList() ?: mutableListOf()
+
         val position = list.indexOfFirst {
             when (it) {
                 is ItemType.Item -> it.item.id == item.id
                 else -> false
             }
         }
+
         if (position > -1) {
             list.removeAt(position)
+
+            val remaining = list.count { it is ItemType.Item && it.item.initial == item.initial }
+
+            if (remaining == 0) {
+                list.removeAll { it is ItemType.Header && it.initial == item.initial }
+            }
+
             _bookmarks.value = list
         }
     }
