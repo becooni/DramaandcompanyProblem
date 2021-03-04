@@ -13,8 +13,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.becooni.dramaandcompanyproblem.R
 import com.becooni.dramaandcompanyproblem.databinding.ActivityMainBinding
-import com.becooni.dramaandcompanyproblem.ui.bookmark.BookmarkFragment
-import com.becooni.dramaandcompanyproblem.ui.user.UserFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 

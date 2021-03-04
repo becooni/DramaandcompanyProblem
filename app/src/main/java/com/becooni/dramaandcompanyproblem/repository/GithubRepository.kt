@@ -27,8 +27,7 @@ class GithubRepository @Inject constructor(
                 if (bookmarkedUsers.isEmpty()) {
                     users
                 } else {
-                    val userMap = users.associateBy { it.id }
-                        .toMutableMap()
+                    val userMap = users.associateBy { it.id }.toMutableMap()
 
                     val bookmarkUserMap = bookmarkedUsers.associateBy { it.id }
 
