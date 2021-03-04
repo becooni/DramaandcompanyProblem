@@ -123,6 +123,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    // 즐겨찾기 추가시 해당 첫글자 그룹에 정렬 순서에 맞게 Add
     private fun addBookmark(item: User) {
         val list = _bookmarks.toMutableList()
 
@@ -145,7 +146,7 @@ class MainViewModel @Inject constructor(
 
         if (position > -1) {
             list.add(position + 1, copiedItem)
-        } else {
+        } else { // 해당 첫글자 그룹이 없으면
             val prePosition = list.indexOfFirst {
                 it is ItemType.Header && it.initial > initial
             }
@@ -174,6 +175,7 @@ class MainViewModel @Inject constructor(
         if (position > -1) {
             list.removeAt(position)
 
+            // 그룹 내 아이템이 0개일때 Header도 삭제
             val remaining = list.count { it is ItemType.Item && it.item.initial == item.initial }
 
             if (remaining == 0) {
