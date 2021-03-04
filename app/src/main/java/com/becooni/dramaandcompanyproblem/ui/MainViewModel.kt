@@ -45,4 +45,16 @@ class MainViewModel @Inject constructor(
     fun onSearchClick(query: String) {
         searchUsers(query)
     }
+
+    fun onBookmarkClick(item: User) {
+        githubRepository.insertBookmarkUser(item)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                },
+                Throwable::printStackTrace
+            )
+            .addTo(disposable)
+    }
 }

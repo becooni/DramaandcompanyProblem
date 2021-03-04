@@ -12,11 +12,17 @@
             type="com.becooni.dramaandcompanyproblem.model.User"
             />
 
+        <variable
+            name="vm"
+            type="com.becooni.dramaandcompanyproblem.ui.MainViewModel"
+            />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{() -> vm.onBookmarkClick(item)}"
         android:padding="24dp"
         >
 
@@ -54,6 +60,7 @@
             android:background="@drawable/ic_star_40"
             android:button="@null"
             android:checked="@{item.bookmarked}"
+            android:clickable="false"
             app:layout_constraintBottom_toBottomOf="@id/profileImageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/profileImageView"

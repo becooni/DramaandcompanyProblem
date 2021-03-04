@@ -29,6 +29,7 @@ class UserAdapter : ListAdapter<User, UserAdapter.UserViewHolder>(Companion) {
 
         fun bind(item: User) {
             binding.item = item
+            binding.vm = viewModel
         }
     }
 

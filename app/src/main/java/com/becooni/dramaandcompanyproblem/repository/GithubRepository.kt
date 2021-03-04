@@ -1,7 +1,9 @@
 package com.becooni.dramaandcompanyproblem.repository
 
+import com.becooni.dramaandcompanyproblem.model.User
 import com.becooni.dramaandcompanyproblem.network.GithubClient
 import com.becooni.dramaandcompanyproblem.persistence.UserDao
+import io.reactivex.Completable
 import javax.inject.Inject
 
 class GithubRepository @Inject constructor(
@@ -42,4 +44,9 @@ class GithubRepository @Inject constructor(
             }
 
     fun getBookmarkUsers() = userDao.getBookmarkedUsers()
+
+    fun insertBookmarkUser(item: User): Completable {
+        item.bookmarked = true
+        return userDao.insert(item)
+    }
 }
