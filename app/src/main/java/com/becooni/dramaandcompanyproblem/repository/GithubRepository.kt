@@ -21,9 +21,7 @@ class GithubRepository @Inject constructor(
         githubClient.getUsers(query, page, perPage)
             .map { it.users }
             .map { list ->
-                list.map {
-                    it.copy(initial = it.name.first().toString())
-                }
+                list.map { it.copy(initial = it.name.first().toString()) }
             }
             .zipWith(userDao.getBookmarkedUsers()) { users, bookmarkedUsers ->
                 if (bookmarkedUsers.isEmpty()) {
@@ -36,7 +34,8 @@ class GithubRepository @Inject constructor(
 
                     for (bookmarkUser in bookmarkUserMap) {
                         val key = bookmarkUser.key
-                        if (userMap[key]?.id == bookmarkUser.value.id) {
+
+                        if (userMap.containsKey(key)) {
                             userMap[key] = bookmarkUser.value
                         }
                     }
