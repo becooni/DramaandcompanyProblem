@@ -14,6 +14,9 @@ interface UserDao {
     @Query("SELECT * FROM user")
     fun getBookmarkedUsers(): Single<List<User>>
 
+    @Query("SELECT * FROM user WHERE name LIKE '%' || :query || '%'")
+    fun getBookmarkedUsers(query: String): Single<List<User>>
+
     @Insert
     fun insert(vararg items: User): Completable
 

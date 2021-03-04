@@ -53,6 +53,12 @@ class GithubRepository @Inject constructor(
             .getGrouping()
     }
 
+    fun getBookmarkUsers(query: String): Single<List<ItemType>> {
+        return userDao.getBookmarkedUsers(query)
+            .getSortingList()
+            .getGrouping()
+    }
+
     fun insertBookmarkUser(item: User): Completable {
         return userDao.insert(item)
     }

@@ -18,9 +18,6 @@ class MainViewModel @Inject constructor(
     private val githubRepository: GithubRepository
 ) : ViewModel() {
 
-    private val _toast = MutableLiveData<String>()
-    val toast: LiveData<String> = _toast
-
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
@@ -64,8 +61,26 @@ class MainViewModel @Inject constructor(
             .addTo(disposables)
     }
 
+    private fun searchBookmarks(query: String) {
+        githubRepository.getBookmarkUsers(query)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { _loading.value = true }
+            .doFinally { _loading.value = false }
+            .subscribe(
+                {
+                    _bookmarks.value = it
+                },
+                Throwable::printStackTrace
+            )
+            .addTo(disposables)
+    }
+
     internal fun onSearchClick(query: String) {
-        searchUsers(query)
+        when (currentTab) {
+            TabType.SEARCH -> searchUsers(query)
+            TabType.BOOKMARK -> searchBookmarks(query)
+        }
     }
 
     internal fun onBookmarkClick(item: User) {
@@ -112,10 +127,6 @@ class MainViewModel @Inject constructor(
         val list = _bookmarks.value?.toMutableList() ?: mutableListOf()
 
         val initial = item.initial
-
-//        val position = list.indexOfFirst {
-//            it is ItemType.Item && it.item.initial == initial && it.item.name > item.name
-//        }
 
         var position = -1
 

@@ -48,7 +48,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            android:enabled="@{vm.inputText.length() > 0}"
             android:onClick="@{() -> vm.onSearchClick$app_debug(vm.inputText)}"
             android:text="Search"
             app:layout_constraintBottom_toBottomOf="@id/searchEditText"
