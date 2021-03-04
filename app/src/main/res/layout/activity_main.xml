@@ -43,13 +43,40 @@
 
         </com.google.android.material.tabs.TabLayout>
 
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:singleLine="true"
+            android:text="@={vm.inputText}"
+            app:layout_constraintEnd_toStartOf="@id/searchButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout"
+            />
+
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:enabled="@{vm.inputText.length() > 0}"
+            android:onClick="@{() -> vm.onSearchClick(vm.inputText)}"
+            android:text="Search"
+            app:layout_constraintBottom_toBottomOf="@id/searchEditText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/searchEditText"
+            />
+
         <androidx.viewpager2.widget.ViewPager2
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tabLayout"
+            app:layout_constraintTop_toBottomOf="@id/searchEditText"
             />
 
         <ProgressBar
