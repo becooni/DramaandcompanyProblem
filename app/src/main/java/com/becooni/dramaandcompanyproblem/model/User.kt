@@ -14,7 +14,7 @@ data class User(
     val name: String,
     @SerializedName("avatar_url")
     val avatarUrl: String,
-    @ColumnInfo(name = "bookmarked", typeAffinity = ColumnInfo.INTEGER, defaultValue = "0")
+    @ColumnInfo(name = "bookmarked", typeAffinity = ColumnInfo.INTEGER)
     var bookmarked: Boolean,
     var initialConsonant: Char?
 )

@@ -1,9 +1,6 @@
 package com.becooni.dramaandcompanyproblem.persistence
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.becooni.dramaandcompanyproblem.model.User
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -14,7 +11,7 @@ interface UserDao {
     @Query("SELECT * FROM user WHERE bookmarked = 1")
     fun getBookmarkedUsers(): Single<List<User>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg items: User): Completable
 
     @Update

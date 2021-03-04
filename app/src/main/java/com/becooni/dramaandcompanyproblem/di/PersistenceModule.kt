@@ -21,7 +21,9 @@ object PersistenceModule {
             appContext,
             AppDatabase::class.java,
             "User.db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
 
     @Provides
     @Singleton
