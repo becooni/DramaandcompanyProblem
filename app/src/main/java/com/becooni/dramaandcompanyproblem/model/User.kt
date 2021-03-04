@@ -1,6 +1,5 @@
 package com.becooni.dramaandcompanyproblem.model
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
@@ -14,7 +13,6 @@ data class User(
     val name: String,
     @SerializedName("avatar_url")
     val avatarUrl: String,
-    @ColumnInfo(name = "bookmarked", typeAffinity = ColumnInfo.INTEGER)
-    var bookmarked: Boolean,
-    var initialConsonant: Char?
+    val bookmarked: Boolean,
+    val initial: String
 )

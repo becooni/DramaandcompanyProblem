@@ -6,38 +6,75 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.becooni.dramaandcompanyproblem.R
+import com.becooni.dramaandcompanyproblem.databinding.ItemHeaderBinding
 import com.becooni.dramaandcompanyproblem.databinding.ItemUserBinding
+import com.becooni.dramaandcompanyproblem.model.ItemType
 import com.becooni.dramaandcompanyproblem.model.User
 
-class UserAdapter : ListAdapter<User, UserAdapter.UserViewHolder>(Companion) {
+class UserAdapter : ListAdapter<ItemType, RecyclerView.ViewHolder>(Companion) {
 
     internal var viewModel: MainViewModel? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        UserViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false)
-        )
-
-    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        holder.bind(getItem(position))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            ItemType.LAYOUT_RES_ID_ITEM -> ItemViewHolder(
+                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+            )
+            ItemType.LAYOUT_RES_ID_HEADER -> HeaderViewHolder(
+                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+            )
+            else -> throw IllegalArgumentException("Unsupported type: $viewType")
+        }
     }
 
-    inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (val item = getItem(position)) {
+            is ItemType.Item -> (holder as ItemViewHolder).bind(item.item)
+            is ItemType.Header -> (holder as HeaderViewHolder).bind(item.initial)
+        }
+    }
+
+    override fun getItemViewType(position: Int) = getItem(position).layoutId
+
+    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val binding = ItemUserBinding.bind(itemView)
 
         fun bind(item: User) {
             binding.item = item
             binding.vm = viewModel
+            binding.executePendingBindings()
         }
     }
 
-    companion object : DiffUtil.ItemCallback<User>() {
-        override fun areItemsTheSame(oldItem: User, newItem: User) =
-            oldItem.id == newItem.id
+    class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        override fun areContentsTheSame(oldItem: User, newItem: User) =
-            oldItem == newItem
+        private val binding = ItemHeaderBinding.bind(itemView)
+
+        fun bind(item: String) {
+            binding.item = item
+            binding.executePendingBindings()
+        }
+    }
+
+    companion object : DiffUtil.ItemCallback<ItemType>() {
+
+        override fun areItemsTheSame(oldItem: ItemType, newItem: ItemType) =
+            if (oldItem is ItemType.Item && newItem is ItemType.Item) {
+                oldItem.item.id == newItem.item.id
+            } else if (oldItem is ItemType.Header && newItem is ItemType.Header) {
+                oldItem.initial == newItem.initial
+            } else {
+                false
+            }
+
+        override fun areContentsTheSame(oldItem: ItemType, newItem: ItemType) =
+            if (oldItem is ItemType.Item && newItem is ItemType.Item) {
+                oldItem == newItem
+            } else if (oldItem is ItemType.Header && newItem is ItemType.Header) {
+                oldItem == newItem
+            } else {
+                false
+            }
     }
 }
