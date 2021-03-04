@@ -204,4 +204,6 @@ class MainViewModel @Inject constructor(
     internal fun setCurrentTab(tabType: TabType) {
         currentTab = tabType
     }
+
+    private fun LiveData<List<ItemType>>.toMutableList() = value?.toMutableList() ?: mutableListOf()
 }
