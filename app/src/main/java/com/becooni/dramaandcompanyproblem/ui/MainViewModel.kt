@@ -1,6 +1,7 @@
 package com.becooni.dramaandcompanyproblem.ui
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.becooni.dramaandcompanyproblem.model.ItemType
@@ -33,7 +34,19 @@ class MainViewModel @Inject constructor(
 
     private lateinit var currentTab: TabType
 
+    private val _searchButtonEnabled = MediatorLiveData<Boolean>()
+    val searchButtonEnabled: LiveData<Boolean> = _searchButtonEnabled
+
     init {
+        _loading.value = false
+
+        _searchButtonEnabled.addSource(loading) {
+            _searchButtonEnabled.value = checkButtonValidation(loading, inputText)
+        }
+        _searchButtonEnabled.addSource(inputText) {
+            _searchButtonEnabled.value = checkButtonValidation(loading, inputText)
+        }
+
         githubRepository.getBookmarkUsers()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -45,6 +58,9 @@ class MainViewModel @Inject constructor(
             )
             .addTo(disposables)
     }
+
+    private fun checkButtonValidation(loading: LiveData<Boolean>, inputText: LiveData<String>) =
+        loading.value == false && inputText.value.isNullOrBlank().not()
 
     private fun searchUsers(query: String) {
         githubRepository.getUsers(query)
