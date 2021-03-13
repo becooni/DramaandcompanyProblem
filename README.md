@@ -1,4 +1,4 @@
-# DramaandcompanyProblem
+#
 
 MVVM 아키텍처 패턴으로 작성한 드라마앤컴퍼니 과제입니다.
 

@@ -10,7 +10,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.becooni.dramaandcompanyproblem"
+        applicationId "com.becooni.roompractice"
         minSdkVersion 17
         targetSdkVersion 30
         multiDexEnabled true

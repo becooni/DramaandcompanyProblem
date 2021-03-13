@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.becooni.dramaandcompanyproblem.ui.MainViewModel"
+            type="com.becooni.roompractice.ui.MainViewModel"
             />
 
     </data>
